@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Морфологический анализ</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+  <section>
+    <h1>Морфологические формы слов<br>(только русский язык)</h1>
+
+    <textarea id="wordInput" rows="10" cols="40" placeholder="Введите слова, по одному на строку..."></textarea>
+    <br>
+    <button onclick="analyze()">Анализировать</button>
+    <button onclick="copyResult()">Скопировать результат</button>
+    <h2>Результат:</h2>
+    <pre id="output" style="white-space: pre-wrap;"></pre>
+  </section>
+
+  <script>
+    async function analyze() {
+      const input = document.getElementById('wordInput').value;
+      const words = input.split('\n').map(w => w.trim()).filter(Boolean);
+
+      const response = await fetch('http://localhost:5000/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ words })
+      });
+
+      const data = await response.json();
+
+      let result = '';
+      for (const word in data) {
+        result += `${data[word].join('\n')}\n`;
+      }
+
+      document.getElementById('output').textContent = result;
+    }
+
+    function copyResult() {
+      const output = document.getElementById('output').textContent;
+      navigator.clipboard.writeText(output).then(() => {
+        alert("Результат скопирован в буфер обмена!");
+      }).catch(err => {
+        alert("Ошибка при копировании: " + err);
+      });
+    }
+  </script>
+</body>
+</html>
