@@ -24,7 +24,7 @@
       const input = document.getElementById('wordInput').value;
       const words = input.split('\n').map(w => w.trim()).filter(Boolean);
 
-      const response = await fetch('https://morph-analyzer.onrender.com/', {
+      const response = await fetch('https://morph-analyzer.onrender.com/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ words })
