@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: твой-сервис
+    name: morph-analyzer
     env: python
-    pythonVersion: "3.10"
-    # остальные параметры...
+    pythonVersion: 3.10.13
+    
