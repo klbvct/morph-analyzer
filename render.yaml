@@ -1,6 +1,0 @@
-services:
-  - type: web
-    name: morph-analyzer
-    env: python
-    pythonVersion: 3.10.13
-    
